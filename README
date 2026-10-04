@@ -94,6 +94,19 @@ privileges:
 	Sys.ACME.Account.Create: register ACME accounts
 	Sys.ACME.Account.Modify: update ACME accounts
 	Sys.ACME.Account.Remove: deactivate ACME accounts
+	Sys.ACME.Certificate.Order: order a node certificate
+	Sys.ACME.Certificate.Renew: renew a node certificate
+	Sys.ACME.Certificate.Revoke: revoke a node certificate
+	Sys.ACME.Config.Account.Modify: change the ACME account option of a node
+	Sys.ACME.Config.Audit: view the ACME options of a node
+	Sys.ACME.Config.Domain.Modify: set an ACME domain option of a node
+	Sys.ACME.Config.Domain.Remove: delete an ACME domain option of a node
+	Sys.ACME.Plugin.Audit: view ACME plugins without credentials
+	Sys.ACME.Plugin.Create: add ACME plugins
+	Sys.ACME.Plugin.Modify: change ACME plugin options except credentials
+	Sys.ACME.Plugin.Remove: delete ACME plugins
+	Sys.ACME.Plugin.Secret.Audit: view ACME plugin credentials
+	Sys.ACME.Plugin.Secret.Modify: set ACME plugin credentials
 	Sys.Audit: view node status/config, Corosync cluster config, and HA config
 	Sys.Console: console access to node
 	Sys.Incoming: allow incoming data streams from other clusters (experimental)

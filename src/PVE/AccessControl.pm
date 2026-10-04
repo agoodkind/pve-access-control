@@ -1100,6 +1100,19 @@ my $privgroups = {
             'Sys.ACME.Account.Create',
             'Sys.ACME.Account.Modify',
             'Sys.ACME.Account.Remove',
+            'Sys.ACME.Plugin.Audit',
+            'Sys.ACME.Plugin.Secret.Audit',
+            'Sys.ACME.Plugin.Create',
+            'Sys.ACME.Plugin.Modify',
+            'Sys.ACME.Plugin.Secret.Modify',
+            'Sys.ACME.Plugin.Remove',
+            'Sys.ACME.Certificate.Order',
+            'Sys.ACME.Certificate.Renew',
+            'Sys.ACME.Certificate.Revoke',
+            'Sys.ACME.Config.Audit',
+            'Sys.ACME.Config.Account.Modify',
+            'Sys.ACME.Config.Domain.Modify',
+            'Sys.ACME.Config.Domain.Remove',
         ],
         admin => [
             'Sys.Console', 'Sys.Syslog',
@@ -1293,6 +1306,8 @@ sub check_path {
 	|/acme
 	|/acme/accounts
 	|/acme/accounts/[A-Za-z][A-Za-z0-9_\-]+
+	|/acme/plugins
+	|/acme/plugins/[A-Za-z][A-Za-z0-9_\-]+
 	|/access
 	|/access/groups
 	|/access/groups/[[:alnum:]\.\-\_]+
