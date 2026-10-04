@@ -90,6 +90,10 @@ privileges:
 	Realm.Allocate: create/modify/remove authentication realms
 	SDN.Allocate: manage SDN configuration
 	SDN.Audit: view SDN configuration
+	Sys.ACME.Account.Audit: view ACME accounts
+	Sys.ACME.Account.Create: register ACME accounts
+	Sys.ACME.Account.Modify: update ACME accounts
+	Sys.ACME.Account.Remove: deactivate ACME accounts
 	Sys.Audit: view node status/config, Corosync cluster config, and HA config
 	Sys.Console: console access to node
 	Sys.Incoming: allow incoming data streams from other clusters (experimental)
@@ -110,9 +114,12 @@ privileges:
 	VM.Config.Cloudinit: modify Cloud-init parameters
 	VM.Config.Disk: add/modify/remove disks
 	VM.Config.HWType: modify emulated hardware types
+	VM.Config.Keyctl: change the container keyctl feature flag
 	VM.Config.Memory: modify memory settings
+	VM.Config.Nesting: change the container nesting feature flag
 	VM.Config.Network: add/modify/remove network devices
 	VM.Config.Options: modify any other VM configuration
+	VM.Config.Vsock: add/modify/remove the virtio-vsock device
 	VM.Console: console access to VM
 	VM.GuestAgent.Audit: issue informational QEMU guest agent commands
 	VM.GuestAgent.FileRead: read files from the guest via QEMU guest agent
