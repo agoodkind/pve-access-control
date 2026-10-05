@@ -122,6 +122,10 @@ privileges:
 	VM.Audit: view VM config
 	VM.Backup: backup/restore VMs
 	VM.Clone: clone/copy a VM
+	VM.Config.BPFDelegate.Attach.<Name>: delegate one BPF attach type to a container
+	VM.Config.BPFDelegate.Cmd.<Name>: delegate one BPF command to a container
+	VM.Config.BPFDelegate.Map.<Name>: delegate one BPF map type to a container
+	VM.Config.BPFDelegate.Prog.<Name>: delegate one BPF program type to a container
 	VM.Config.CDROM: eject/change CD-ROM
 	VM.Config.CPU: modify CPU settings
 	VM.Config.Cloudinit: modify Cloud-init parameters
