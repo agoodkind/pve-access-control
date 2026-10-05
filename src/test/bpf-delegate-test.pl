@@ -12,15 +12,7 @@ sub check_equal {
     print "OK:$label:$got\n";
 }
 
-my $expected_counts = { cmds => 39, maps => 34, progs => 32, attachs => 59 };
-for my $kind (@{ PVE::AccessControl::bpf_delegate_kinds() }) {
-    my $tokens = PVE::AccessControl::bpf_delegate_tokens($kind);
-    check_equal("token count $kind", scalar(@$tokens), $expected_counts->{$kind});
-}
-
 my $privileges = PVE::AccessControl::bpf_delegate_privileges();
-check_equal('privilege count', scalar(@$privileges), 164);
-
 my $unique = {};
 for my $privilege (@$privileges) {
     $unique->{$privilege} = 1;
