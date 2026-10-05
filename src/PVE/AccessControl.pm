@@ -1167,6 +1167,9 @@ my $privgroups = {
             'VM.Config.Nesting',
             'VM.Config.Keyctl',
             'VM.Config.Vsock',
+            'VM.Guest.Exec',
+            'VM.Guest.FileRead',
+            'VM.Guest.FileWrite',
             @{ bpf_delegate_privileges() },
         ],
         admin => [

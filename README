@@ -138,6 +138,9 @@ privileges:
 	VM.Config.Options: modify any other VM configuration
 	VM.Config.Vsock: add/modify/remove the virtio-vsock device
 	VM.Console: console access to VM
+	VM.Guest.Exec: run a command as root in a container
+	VM.Guest.FileRead: read a file in a container
+	VM.Guest.FileWrite: write a file in a container
 	VM.GuestAgent.Audit: issue informational QEMU guest agent commands
 	VM.GuestAgent.FileRead: read files from the guest via QEMU guest agent
 	VM.GuestAgent.FileSystemMgmt: freeze/thaw/trim file systems via QEMU guest gent

@@ -91,7 +91,8 @@ my $administrator_privileges =
         . 'VM.Allocate,VM.Audit,VM.Backup,VM.Clone,VM.Config.CDROM,VM.Config.CPU,VM.Config.Cloudinit,'
         . 'VM.Config.Disk,VM.Config.HWType,VM.Config.Keyctl,VM.Config.Memory,VM.Config.Nesting,'
         . 'VM.Config.Network,VM.Config.Options,VM.Config.Vsock,'
-        . 'VM.Console,VM.GuestAgent.Audit,VM.GuestAgent.FileRead,VM.GuestAgent.FileSystemMgmt,'
+        . 'VM.Console,VM.Guest.Exec,VM.Guest.FileRead,VM.Guest.FileWrite,'
+        . 'VM.GuestAgent.Audit,VM.GuestAgent.FileRead,VM.GuestAgent.FileSystemMgmt,'
         . 'VM.GuestAgent.FileWrite,VM.GuestAgent.Unrestricted,VM.Migrate,VM.PowerMgmt,VM.Replicate,'
         . 'VM.Snapshot,VM.Snapshot.Rollback';
 

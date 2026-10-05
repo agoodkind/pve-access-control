@@ -57,6 +57,12 @@ for my $rejected ('any', '0x4', 'unspec', 'prog_run', 'PROG_LOAD', 'bpf_prog_loa
     die "name '$rejected' was accepted\n" if !$@;
 }
 
+for my $privilege (qw(VM.Guest.Exec VM.Guest.FileRead VM.Guest.FileWrite)) {
+    die "privilege '$privilege' is not registered\n"
+        if !PVE::AccessControl::verify_privname($privilege, 1);
+    print "OK:registered:$privilege\n";
+}
+
 print "all tests passed\n";
 
 exit(0);
