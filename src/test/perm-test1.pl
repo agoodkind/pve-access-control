@@ -70,10 +70,8 @@ check_permission(
         . 'VM.Snapshot,VM.Snapshot.Rollback',
 );
 # Administrator -> Permissions.Modify!
-check_permission(
-    'alex@pve',
-    '/vms/400',
-    '' # sorted, comma-separated expected privilege string, loosely grouped by prefix
+my $administrator_privileges =
+    '' # comma-separated expected privileges without the BPFDelegate ones, loosely grouped by prefix
         . 'Datastore.Allocate,Datastore.AllocateSpace,Datastore.AllocateTemplate,Datastore.Audit,'
         . 'Group.Allocate,'
         . 'Mapping.Audit,Mapping.Modify,Mapping.Use,'
@@ -93,9 +91,17 @@ check_permission(
         . 'VM.Allocate,VM.Audit,VM.Backup,VM.Clone,VM.Config.CDROM,VM.Config.CPU,VM.Config.Cloudinit,'
         . 'VM.Config.Disk,VM.Config.HWType,VM.Config.Keyctl,VM.Config.Memory,VM.Config.Nesting,'
         . 'VM.Config.Network,VM.Config.Options,VM.Config.Vsock,'
-        . 'VM.Console,VM.GuestAgent.Audit,VM.GuestAgent.FileRead,VM.GuestAgent.FileSystemMgmt,'
+        . 'VM.Console,VM.Guest.Exec,VM.Guest.FileRead,VM.Guest.FileWrite,'
+        . 'VM.GuestAgent.Audit,VM.GuestAgent.FileRead,VM.GuestAgent.FileSystemMgmt,'
         . 'VM.GuestAgent.FileWrite,VM.GuestAgent.Unrestricted,VM.Migrate,VM.PowerMgmt,VM.Replicate,'
-        . 'VM.Snapshot,VM.Snapshot.Rollback',
+        . 'VM.Snapshot,VM.Snapshot.Rollback';
+
+my @expected_administrator_privileges = split(/,/, $administrator_privileges);
+push @expected_administrator_privileges, @{ PVE::AccessControl::bpf_delegate_privileges() };
+check_permission(
+    'alex@pve',
+    '/vms/400',
+    join(',', sort @expected_administrator_privileges),
 );
 
 check_roles('max@pve', '/vms/200', 'storage_manager');

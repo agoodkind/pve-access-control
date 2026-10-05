@@ -1049,6 +1049,113 @@ sub delete_pool_acl {
     delete($usercfg->{acl_root}->{children}->{pool}->{children}->{$pool});
 }
 
+# Each list is the set of values that the bpffs mount options delegate_cmds, delegate_maps,
+# delegate_progs, and delegate_attachs accept. A value is a lowercase enum constant of
+# include/uapi/linux/bpf.h in Linux v7.0 without the BPF_, BPF_MAP_TYPE_, or BPF_PROG_TYPE_
+# prefix. The lists exclude UNSPEC, the __MAX_* entries, and constants that alias another
+# constant.
+# PVE::LXC::Config validates the container option bpfdelegate against these lists. Each value
+# has one VM.Config.BPFDelegate privilege.
+my $bpf_delegate_tokens = {
+    cmds => [
+        qw(
+            map_create map_lookup_elem map_update_elem map_delete_elem map_get_next_key
+            prog_load obj_pin obj_get prog_attach prog_detach prog_test_run prog_get_next_id
+            map_get_next_id prog_get_fd_by_id map_get_fd_by_id obj_get_info_by_fd prog_query
+            raw_tracepoint_open btf_load btf_get_fd_by_id task_fd_query
+            map_lookup_and_delete_elem map_freeze btf_get_next_id map_lookup_batch
+            map_lookup_and_delete_batch map_update_batch map_delete_batch link_create
+            link_update link_get_fd_by_id link_get_next_id enable_stats iter_create link_detach
+            prog_bind_map token_create prog_stream_read_by_fd prog_assoc_struct_ops
+        ),
+    ],
+    maps => [
+        qw(
+            hash array prog_array perf_event_array percpu_hash percpu_array stack_trace
+            cgroup_array lru_hash lru_percpu_hash lpm_trie array_of_maps hash_of_maps devmap
+            sockmap cpumap xskmap sockhash cgroup_storage_deprecated reuseport_sockarray
+            percpu_cgroup_storage_deprecated queue stack sk_storage devmap_hash struct_ops
+            ringbuf inode_storage task_storage bloom_filter user_ringbuf cgrp_storage arena
+            insn_array
+        ),
+    ],
+    progs => [
+        qw(
+            socket_filter kprobe sched_cls sched_act tracepoint xdp perf_event cgroup_skb
+            cgroup_sock lwt_in lwt_out lwt_xmit sock_ops sk_skb cgroup_device sk_msg
+            raw_tracepoint cgroup_sock_addr lwt_seg6local lirc_mode2 sk_reuseport flow_dissector
+            cgroup_sysctl raw_tracepoint_writable cgroup_sockopt tracing struct_ops ext lsm
+            sk_lookup syscall netfilter
+        ),
+    ],
+    attachs => [
+        qw(
+            cgroup_inet_ingress cgroup_inet_egress cgroup_inet_sock_create cgroup_sock_ops
+            sk_skb_stream_parser sk_skb_stream_verdict cgroup_device sk_msg_verdict
+            cgroup_inet4_bind cgroup_inet6_bind cgroup_inet4_connect cgroup_inet6_connect
+            cgroup_inet4_post_bind cgroup_inet6_post_bind cgroup_udp4_sendmsg
+            cgroup_udp6_sendmsg lirc_mode2 flow_dissector cgroup_sysctl cgroup_udp4_recvmsg
+            cgroup_udp6_recvmsg cgroup_getsockopt cgroup_setsockopt trace_raw_tp trace_fentry
+            trace_fexit modify_return lsm_mac trace_iter cgroup_inet4_getpeername
+            cgroup_inet6_getpeername cgroup_inet4_getsockname cgroup_inet6_getsockname
+            xdp_devmap cgroup_inet_sock_release xdp_cpumap sk_lookup xdp sk_skb_verdict
+            sk_reuseport_select sk_reuseport_select_or_migrate perf_event trace_kprobe_multi
+            lsm_cgroup struct_ops netfilter tcx_ingress tcx_egress trace_uprobe_multi
+            cgroup_unix_connect cgroup_unix_sendmsg cgroup_unix_recvmsg cgroup_unix_getpeername
+            cgroup_unix_getsockname netkit_primary netkit_peer trace_kprobe_session
+            trace_uprobe_session trace_fsession
+        ),
+    ],
+};
+
+my $bpf_delegate_kinds = [qw(cmds maps progs attachs)];
+
+my $bpf_delegate_privilege_prefix = {
+    cmds => 'VM.Config.BPFDelegate.Cmd',
+    maps => 'VM.Config.BPFDelegate.Map',
+    progs => 'VM.Config.BPFDelegate.Prog',
+    attachs => 'VM.Config.BPFDelegate.Attach',
+};
+
+my $bpf_delegate_privileges = {};
+for my $kind (@$bpf_delegate_kinds) {
+    for my $token (@{ $bpf_delegate_tokens->{$kind} }) {
+        my $camel_case = join('', map { ucfirst($_) } split(/_/, $token));
+        $bpf_delegate_privileges->{$kind}->{$token} =
+            "$bpf_delegate_privilege_prefix->{$kind}.$camel_case";
+    }
+}
+
+sub bpf_delegate_kinds {
+    return [@$bpf_delegate_kinds];
+}
+
+sub bpf_delegate_tokens {
+    my ($kind) = @_;
+
+    my $tokens = $bpf_delegate_tokens->{$kind};
+    die "unknown bpf delegate list '$kind'\n" if !$tokens;
+    return [@$tokens];
+}
+
+sub bpf_delegate_privilege {
+    my ($kind, $token) = @_;
+
+    my $privilege = $bpf_delegate_privileges->{$kind}->{$token};
+    die "unknown bpf delegate name '$token' in '$kind'\n" if !$privilege;
+    return $privilege;
+}
+
+sub bpf_delegate_privileges {
+    my $privileges = [];
+    for my $kind (@$bpf_delegate_kinds) {
+        for my $token (@{ $bpf_delegate_tokens->{$kind} }) {
+            push @$privileges, $bpf_delegate_privileges->{$kind}->{$token};
+        }
+    }
+    return $privileges;
+}
+
 # we automatically create some predefined roles by splitting privs
 # into 3 groups (per category)
 # root: only root is allowed to do that
@@ -1060,6 +1167,10 @@ my $privgroups = {
             'VM.Config.Nesting',
             'VM.Config.Keyctl',
             'VM.Config.Vsock',
+            'VM.Guest.Exec',
+            'VM.Guest.FileRead',
+            'VM.Guest.FileWrite',
+            @{ bpf_delegate_privileges() },
         ],
         admin => [
             'VM.Config.Disk',
