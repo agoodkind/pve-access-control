@@ -110,6 +110,8 @@ privileges:
 	Sys.Audit: view node status/config, Corosync cluster config, and HA config
 	Sys.Console: console access to node
 	Sys.Incoming: allow incoming data streams from other clusters (experimental)
+	Sys.KernelModules.Audit: view the persistent kernel module list of a node
+	Sys.KernelModules.Modify: set the persistent kernel module list of a node
 	Sys.Modify: create/modify/remove node network parameters
 	Sys.PowerMgmt: node power management (start, stop, reset, shutdown, ...)
 	Sys.Syslog: view syslog

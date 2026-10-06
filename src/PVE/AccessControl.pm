@@ -1224,6 +1224,8 @@ my $privgroups = {
             'Sys.ACME.Config.Account.Modify',
             'Sys.ACME.Config.Domain.Modify',
             'Sys.ACME.Config.Domain.Remove',
+            'Sys.KernelModules.Audit',
+            'Sys.KernelModules.Modify',
         ],
         admin => [
             'Sys.Console', 'Sys.Syslog',
