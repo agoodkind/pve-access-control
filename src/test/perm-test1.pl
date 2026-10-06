@@ -86,7 +86,7 @@ my $administrator_privileges =
         . 'Sys.ACME.Config.Domain.Remove,'
         . 'Sys.ACME.Plugin.Audit,Sys.ACME.Plugin.Create,Sys.ACME.Plugin.Modify,'
         . 'Sys.ACME.Plugin.Remove,Sys.ACME.Plugin.Secret.Audit,Sys.ACME.Plugin.Secret.Modify,'
-        . 'Sys.AccessNetwork,Sys.Audit,Sys.Console,Sys.Incoming,Sys.Modify,Sys.PowerMgmt,Sys.Syslog,'
+        . 'Sys.AccessNetwork,Sys.Audit,Sys.Console,Sys.Incoming,Sys.KernelModules.Audit,Sys.KernelModules.Modify,Sys.Modify,Sys.PowerMgmt,Sys.Syslog,'
         . 'User.Modify,'
         . 'VM.Allocate,VM.Audit,VM.Backup,VM.Clone,VM.Config.CDROM,VM.Config.CPU,VM.Config.Cloudinit,'
         . 'VM.Config.Disk,VM.Config.HWType,VM.Config.Keyctl,VM.Config.Memory,VM.Config.Nesting,'
