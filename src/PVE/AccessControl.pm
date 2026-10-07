@@ -1167,6 +1167,7 @@ my $privgroups = {
             'VM.Config.Nesting',
             'VM.Config.Keyctl',
             'VM.Config.Vsock',
+            'VM.Config.HostNIC',
             'VM.Guest.Exec',
             'VM.Guest.FileRead',
             'VM.Guest.FileWrite',
@@ -1226,6 +1227,7 @@ my $privgroups = {
             'Sys.ACME.Config.Domain.Remove',
             'Sys.KernelModules.Audit',
             'Sys.KernelModules.Modify',
+            'Sys.HostNIC.Use',
         ],
         admin => [
             'Sys.Console', 'Sys.Syslog',
@@ -1426,6 +1428,8 @@ sub check_path {
 	|/access/groups/[[:alnum:]\.\-\_]+
 	|/access/realm
 	|/access/realm/[[:alnum:]\.\-\_]+
+	|/hostnic
+	|/hostnic/[a-zA-Z0-9_.\-]{1,15}
 	|/nodes
 	|/nodes/[[:alnum:]\.\-\_]+
 	|/pool

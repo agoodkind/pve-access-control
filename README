@@ -109,6 +109,7 @@ privileges:
 	Sys.ACME.Plugin.Secret.Modify: set ACME plugin credentials
 	Sys.Audit: view node status/config, Corosync cluster config, and HA config
 	Sys.Console: console access to node
+	Sys.HostNIC.Use: use a host network interface in a container
 	Sys.Incoming: allow incoming data streams from other clusters (experimental)
 	Sys.KernelModules.Audit: view the persistent kernel module list of a node
 	Sys.KernelModules.Modify: set the persistent kernel module list of a node
@@ -133,6 +134,7 @@ privileges:
 	VM.Config.Cloudinit: modify Cloud-init parameters
 	VM.Config.Disk: add/modify/remove disks
 	VM.Config.HWType: modify emulated hardware types
+	VM.Config.HostNIC: change container host network interface options
 	VM.Config.Keyctl: change the container keyctl feature flag
 	VM.Config.Memory: modify memory settings
 	VM.Config.Nesting: change the container nesting feature flag
