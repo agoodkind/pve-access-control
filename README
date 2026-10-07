@@ -115,6 +115,8 @@ privileges:
 	Sys.KernelModules.Modify: set the persistent kernel module list of a node
 	Sys.Modify: create/modify/remove node network parameters
 	Sys.PowerMgmt: node power management (start, stop, reset, shutdown, ...)
+	Sys.SRIOV.Audit: view the SR-IOV virtual function state of a node port
+	Sys.SRIOV.Modify: set the SR-IOV virtual function state of a node port
 	Sys.Syslog: view syslog
 	User.Modify: create/modify/remove user access and details.
 

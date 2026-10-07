@@ -1228,6 +1228,8 @@ my $privgroups = {
             'Sys.KernelModules.Audit',
             'Sys.KernelModules.Modify',
             'Sys.HostNIC.Use',
+            'Sys.SRIOV.Audit',
+            'Sys.SRIOV.Modify',
         ],
         admin => [
             'Sys.Console', 'Sys.Syslog',
