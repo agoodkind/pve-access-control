@@ -13,5 +13,6 @@ check:
 	perl -I.. perm-test7.pl
 	perl -I.. perm-test8.pl
 	perl -I.. bpf-delegate-test.pl
+	perl -I.. hostnic-test.pl
 	perl -I.. realm_sync_test.pl
 	perl -I.. api-tests.pl
