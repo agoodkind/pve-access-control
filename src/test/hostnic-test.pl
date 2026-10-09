@@ -43,6 +43,8 @@ for my $path (
     '/hostnic/1234567890123456',
     '/hostnic/a b',
     '/hostnic/a:b',
+    '/hostnic/.',
+    '/hostnic/..',
 ) {
     die "path '$path' was accepted\n" if PVE::AccessControl::check_path($path);
     print "OK:rejected path:$path\n";

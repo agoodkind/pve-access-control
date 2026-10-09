@@ -1429,7 +1429,7 @@ sub check_path {
 	|/access/realm
 	|/access/realm/[[:alnum:]\.\-\_]+
 	|/hostnic
-	|/hostnic/[a-zA-Z0-9_.\-]{1,15}
+	|/hostnic/[a-zA-Z0-9_][a-zA-Z0-9_.\-]{0,14}
 	|/nodes
 	|/nodes/[[:alnum:]\.\-\_]+
 	|/pool
