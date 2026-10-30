@@ -11,6 +11,7 @@ $rpcenv->init_request(userconfig => 'host-artifacts-test.cfg');
 
 my $AUDIT_PRIVILEGE = 'Sys.HostArtifacts.Audit';
 my $MODIFY_PRIVILEGE = 'Sys.HostArtifacts.Modify';
+my $SECRET_PRIVILEGE = 'Sys.HostSecrets.Modify';
 
 sub check_equal {
     my ($label, $got, $expected) = @_;
@@ -26,7 +27,7 @@ sub has_permission {
     return $permissions->{$privilege} ? 1 : 0;
 }
 
-for my $privilege ($AUDIT_PRIVILEGE, $MODIFY_PRIVILEGE) {
+for my $privilege ($AUDIT_PRIVILEGE, $MODIFY_PRIVILEGE, $SECRET_PRIVILEGE) {
     die "privilege '$privilege' is not registered\n"
         if !PVE::AccessControl::verify_privname($privilege, 1);
     print "OK:registered:$privilege\n";
@@ -55,6 +56,13 @@ check_equal('carol modify', has_permission('carol@pve', '/nodes/node1', $MODIFY_
 
 check_equal('dave audit', has_permission('dave@pve', '/nodes/node1', $AUDIT_PRIVILEGE), 0);
 check_equal('dave modify', has_permission('dave@pve', '/nodes/node1', $MODIFY_PRIVILEGE), 0);
+
+check_equal('alice secret', has_permission('alice@pve', '/nodes/node1', $SECRET_PRIVILEGE), 1);
+check_equal('bob secret', has_permission('bob@pve', '/nodes/node1', $SECRET_PRIVILEGE), 0);
+check_equal('dave secret', has_permission('dave@pve', '/nodes/node1', $SECRET_PRIVILEGE), 0);
+check_equal('erin secret', has_permission('erin@pve', '/nodes/node1', $SECRET_PRIVILEGE), 1);
+check_equal('erin secret node2', has_permission('erin@pve', '/nodes/node2', $SECRET_PRIVILEGE), 0);
+check_equal('erin modify', has_permission('erin@pve', '/nodes/node1', $MODIFY_PRIVILEGE), 0);
 
 print "all tests passed\n";
 

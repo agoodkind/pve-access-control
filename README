@@ -111,6 +111,7 @@ privileges:
 	Sys.Console: console access to node
 	Sys.HostArtifacts.Audit: view the installed host artifact of a node
 	Sys.HostArtifacts.Modify: stage and install a host artifact on a node
+	Sys.HostSecrets.Modify: set a secret field of a host artifact target on a node
 	Sys.HostNIC.Use: use a host network interface in a container
 	Sys.Incoming: allow incoming data streams from other clusters (experimental)
 	Sys.KernelModules.Audit: view the persistent kernel module list of a node
