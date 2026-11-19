@@ -1228,6 +1228,8 @@ my $privgroups = {
             'Sys.KernelModules.Audit',
             'Sys.KernelModules.Modify',
             'Sys.HostNIC.Use',
+            'Sys.SRIOV.Audit',
+            'Sys.SRIOV.Modify',
             'Sys.HostArtifacts.Audit',
             'Sys.HostArtifacts.Modify',
             'Sys.HostSecrets.Modify',

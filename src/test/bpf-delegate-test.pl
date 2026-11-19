@@ -51,7 +51,7 @@ for my $rejected ('any', '0x4', 'unspec', 'prog_run', 'PROG_LOAD', 'bpf_prog_loa
 
 for my $privilege (
     qw(VM.Guest.Exec VM.Guest.FileRead VM.Guest.FileWrite
-    Sys.KernelModules.Audit Sys.KernelModules.Modify)
+    Sys.KernelModules.Audit Sys.KernelModules.Modify Sys.SRIOV.Audit Sys.SRIOV.Modify)
 ) {
     die "privilege '$privilege' is not registered\n"
         if !PVE::AccessControl::verify_privname($privilege, 1);
